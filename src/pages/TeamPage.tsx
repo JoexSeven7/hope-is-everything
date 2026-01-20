@@ -6,7 +6,7 @@ export const TeamPage = () => {
 			name: 'Dr. Sarah Johnson',
 			position: 'Executive Director & Founder',
 			bio: 'Dr. Johnson has over 15 years of experience in international development and education. She holds a PhD in Education Policy from Harvard University and has worked with UNICEF and UNESCO.',
-			image: '👩‍💼',
+			image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=200&h=200&fit=crop&crop=face',
 			email: 'sarah.johnson@hopeiseverything.org',
 			linkedin: '#',
 		},
@@ -14,7 +14,7 @@ export const TeamPage = () => {
 			name: 'Michael Chen',
 			position: 'Director of Programs',
 			bio: 'Michael oversees all program implementation and has a background in community development. He previously worked with World Bank and has an MBA from Stanford.',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
 			email: 'michael.chen@hopeiseverything.org',
 			linkedin: '#',
 		},
@@ -22,7 +22,7 @@ export const TeamPage = () => {
 			name: 'Dr. Amara Okafor',
 			position: 'Director of Education',
 			bio: 'Dr. Okafor leads our education initiatives and has published extensively on literacy and poverty reduction. She brings 12 years of field experience from across Africa.',
-			image: '👩‍🏫',
+			image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
 			email: 'amara.okafor@hopeiseverything.org',
 			linkedin: '#',
 		},
@@ -30,7 +30,7 @@ export const TeamPage = () => {
 			name: 'James Rodriguez',
 			position: 'Chief Financial Officer',
 			bio: 'James manages our finances and ensures accountability. He has 20 years of experience in nonprofit finance and is a CPA.',
-			image: '👨‍💼',
+			image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face',
 			email: 'james.rodriguez@hopeiseverything.org',
 			linkedin: '#',
 		},
@@ -41,49 +41,49 @@ export const TeamPage = () => {
 			name: 'Lisa Thompson',
 			position: 'Senior Program Manager',
 			department: 'Education Programs',
-			image: '👩‍💻',
+			image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'David Kim',
 			position: 'Technology Coordinator',
 			department: 'Digital Innovation',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Fatima Al-Rashid',
 			position: 'Regional Coordinator',
 			department: 'Middle East & North Africa',
-			image: '👩‍💼',
+			image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Carlos Mendoza',
 			position: 'Community Liaison',
 			department: 'Latin America',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Priya Sharma',
 			position: 'Research Specialist',
 			department: 'Program Evaluation',
-			image: '👩‍💻',
+			image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Robert Wilson',
 			position: 'Volunteer Coordinator',
 			department: 'Human Resources',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Grace Nakimuli',
 			position: 'Communications Manager',
 			department: 'Marketing & Communications',
-			image: '👩‍💼',
+			image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Ahmed Hassan',
 			position: 'Program Assistant',
 			department: 'Operations',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1504439904031-93ded9f93e4e?w=150&h=150&fit=crop&crop=face',
 		},
 	];
 
@@ -154,7 +154,11 @@ export const TeamPage = () => {
 						{leadership.map((leader, index) => (
 							<div key={index} className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow">
 								<div className="flex items-start space-x-6">
-									<div className="text-6xl flex-shrink-0">{leader.image}</div>
+									<img
+										src={leader.image}
+										alt={leader.name}
+										className="w-24 h-24 rounded-full object-cover border-4 border-gray-200 flex-shrink-0"
+									/>
 									<div className="flex-grow">
 										<h3 className="text-xl font-bold text-gray-900 mb-1">{leader.name}</h3>
 										<p className="text-hope-blue font-semibold mb-3">{leader.position}</p>
@@ -195,7 +199,11 @@ export const TeamPage = () => {
 					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 						{staff.map((member, index) => (
 							<div key={index} className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow">
-								<div className="text-4xl mb-4">{member.image}</div>
+								<img
+									src={member.image}
+									alt={member.name}
+									className="w-16 h-16 rounded-full object-cover mx-auto mb-4 border-2 border-gray-200"
+								/>
 								<h3 className="text-lg font-semibold text-gray-900 mb-1">{member.name}</h3>
 								<p className="text-hope-blue text-sm font-medium mb-1">{member.position}</p>
 								<p className="text-gray-600 text-sm">{member.department}</p>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send, MessageSquare, Heart } from 'lucide-react';
+import contactImage from '../assets/pexels6.jpg';
 
 export const ContactPage = () => {
 	const [formData, setFormData] = useState({
@@ -257,11 +258,18 @@ export const ContactPage = () => {
 						</p>
 					</div>
 
-					<div className="bg-gray-300 rounded-xl h-96 flex items-center justify-center">
-						<div className="text-center">
-							<MapPin className="h-16 w-16 text-gray-500 mx-auto mb-4" />
-							<h3 className="text-xl font-semibold text-gray-700 mb-2">Interactive Map</h3>
-							<p className="text-gray-600">Map integration would be placed here showing our global locations</p>
+					<div
+						className="bg-gray-300 rounded-xl h-96 flex items-center justify-center relative overflow-hidden"
+						style={{
+							backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${contactImage})`,
+							backgroundSize: 'cover',
+							backgroundPosition: 'center',
+							backgroundRepeat: 'no-repeat',
+						}}>
+						<div className="text-center text-white z-10">
+							<MapPin className="h-16 w-16 mx-auto mb-4" />
+							<h3 className="text-xl font-semibold mb-2">Our Global Presence</h3>
+							<p className="text-white/90">25 countries • 150+ communities • 50,000+ lives transformed</p>
 						</div>
 					</div>
 				</div>

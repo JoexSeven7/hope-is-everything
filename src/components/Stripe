@@ -1,0 +1,157 @@
+import { useState } from 'react';
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CreditCard, Lock, Loader } from 'lucide-react';
+
+interface StripePaymentFormProps {
+	amount: number;
+	currency?: string;
+	donorInfo: {
+		name: string;
+		email: string;
+		frequency: string;
+	};
+	onSuccess: () => void;
+	onError: (error: string) => void;
+}
+
+const getCurrencySymbol = (currency: string): string => {
+	const symbols: { [key: string]: string } = {
+		USD: '$',
+		EUR: '€',
+		GBP: '£',
+		CAD: 'C$',
+		AUD: 'A$',
+		JPY: '¥',
+		CHF: 'CHF',
+		NGN: '₦',
+		INR: '₹',
+	};
+	return symbols[currency] || '$';
+};
+
+export const StripePaymentForm: React.FC<StripePaymentFormProps> = ({ amount, currency = 'USD', donorInfo, onSuccess, onError }) => {
+	const stripe = useStripe();
+	const elements = useElements();
+	const [isProcessing, setIsProcessing] = useState(false);
+	const [message, setMessage] = useState('');
+	const currencySymbol = getCurrencySymbol(currency);
+
+	const handleSubmit = async (event: React.FormEvent) => {
+		event.preventDefault();
+
+		if (!stripe || !elements) {
+			return;
+		}
+
+		setIsProcessing(true);
+		setMessage('');
+
+		const { error } = await stripe.confirmPayment({
+			elements,
+			confirmParams: {
+				return_url: `${window.location.origin}/donation-success`,
+				payment_method_data: {
+					billing_details: {
+						name: donorInfo.name,
+						email: donorInfo.email,
+					},
+				},
+			},
+			redirect: 'if_required',
+		});
+
+		if (error) {
+			if (error.type === 'card_error' || error.type === 'validation_error') {
+				setMessage(error.message || 'An error occurred');
+				onError(error.message || 'Payment failed');
+			} else {
+				setMessage('An unexpected error occurred.');
+				onError('An unexpected error occurred');
+			}
+		} else {
+			// Payment succeeded
+			onSuccess();
+		}
+
+		setIsProcessing(false);
+	};
+
+	return (
+		<div className="space-y-6">
+			{/* Payment Summary */}
+			<div className="bg-gray-50 rounded-lg p-4">
+				<h3 className="font-semibold text-gray-900 mb-2">Payment Summary</h3>
+				<div className="flex justify-between items-center">
+					<span className="text-gray-600">
+						Donation Amount
+						{donorInfo.frequency === 'monthly' && ' (Monthly)'}
+						{donorInfo.frequency === 'yearly' && ' (Yearly)'}
+					</span>
+					<span className="font-bold text-lg">{currencySymbol}{amount} {currency}</span>
+				</div>
+				<div className="text-xs text-gray-500 mt-2">Secure payment powered by Stripe</div>
+			</div>
+
+			{/* Payment Form */}
+			<form onSubmit={handleSubmit} className="space-y-4">
+				<div className="border border-gray-200 rounded-lg p-4">
+					<div className="flex items-center mb-4">
+						<CreditCard className="h-5 w-5 text-gray-600 mr-2" />
+						<span className="font-medium text-gray-900">Card Details</span>
+						<Lock className="h-4 w-4 text-green-600 ml-auto" />
+					</div>
+					<PaymentElement
+						options={{
+							layout: 'tabs',
+						}}
+					/>
+				</div>
+
+				{/* Error Message */}
+				{message && (
+					<div className="bg-red-50 border border-red-200 rounded-lg p-3">
+						<p className="text-sm text-red-600">{message}</p>
+					</div>
+				)}
+
+				{/* Security Notice */}
+				<div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+					<div className="flex items-start">
+						<Lock className="h-4 w-4 text-blue-600 mt-0.5 mr-2" />
+						<div className="text-sm text-blue-800">
+							<p className="font-medium mb-1">Secure Payment</p>
+							<p>Your payment information is encrypted and secure. We never store your card details.</p>
+						</div>
+					</div>
+				</div>
+
+				{/* Submit Button */}
+				<button
+					type="submit"
+					disabled={!stripe || !elements || isProcessing}
+					className={`w-full font-semibold py-4 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center ${
+						isProcessing
+							? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+							: 'bg-hope-green hover:bg-green-700 text-white'
+					}`}>
+					{isProcessing ? (
+						<>
+							<Loader className="h-5 w-5 mr-2 animate-spin" />
+							Processing Payment...
+						</>
+					) : (
+						<>
+							<CreditCard className="h-5 w-5 mr-2" />
+							Complete Donation - {currencySymbol}{amount} {currency}
+						</>
+					)}
+				</button>
+
+				<p className="text-xs text-gray-500 text-center">
+					By completing this donation, you agree to our terms of service and privacy policy. Your donation is
+					tax-deductible.
+				</p>
+			</form>
+		</div>
+	);
+};

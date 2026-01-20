@@ -1,4 +1,5 @@
 import { Users, Target, Award, Heart, Globe, BookOpen, Handshake } from 'lucide-react';
+import aboutHeroImage from '../assets/pexels6.jpg';
 
 export const AboutPage = () => {
 	const values = [
@@ -50,7 +51,14 @@ export const AboutPage = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
-			<section className="bg-gradient-to-r from-hope-blue to-blue-700 text-white section-padding">
+			<section
+				className="bg-gradient-to-r from-hope-blue to-blue-700 text-white section-padding relative overflow-hidden"
+				style={{
+					backgroundImage: `linear-gradient(rgba(30, 58, 138, 0.85), rgba(30, 58, 138, 0.85)), url(${aboutHeroImage})`,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					backgroundRepeat: 'no-repeat',
+				}}>
 				<div className="container-max">
 					<div className="max-w-4xl mx-auto text-center">
 						<h1 className="text-4xl md:text-5xl font-bold mb-6">About Hope Is Everything</h1>

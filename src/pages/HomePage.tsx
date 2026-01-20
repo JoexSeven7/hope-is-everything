@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, BookOpen, Heart, Target, Eye, Award, CheckCircle, TrendingUp } from 'lucide-react';
+import { Users, BookOpen, Heart, Target, Eye, Award, CheckCircle, TrendingUp } from 'lucide-react';
+import pexels6Image from '../assets/pexels6.jpg';
+import { AnimatedCounter } from '../components/AnimatedCounter';
+import { DonationCalculator } from '../components/DonationCalculator';
+import { Tooltip } from '../components/Tooltip';
 
 export const HomePage = () => {
 	const impactStats = [
@@ -36,26 +40,33 @@ export const HomePage = () => {
 			quote: "Hope Is Everything gave me the education I dreamed of. Now I'm a teacher helping others.",
 			author: 'Sarah M.',
 			role: 'Graduate & Current Teacher',
-			image: '👩‍🏫',
+			image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			quote: "The skills training program changed my family's future. I can now provide for them.",
 			author: 'James K.',
 			role: 'Skills Training Graduate',
-			image: '👨‍🔧',
+			image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			quote: "This organization doesn't just help - they empower communities for lasting change.",
 			author: 'Dr. Maria Rodriguez',
 			role: 'Community Partner',
-			image: '👩‍⚕️',
+			image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=150&h=150&fit=crop&crop=face',
 		},
 	];
 
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
-			<section className="relative bg-gradient-to-br from-hope-blue to-blue-800 text-white overflow-hidden">
+			<section
+				className="relative bg-gradient-to-br from-hope-blue to-blue-800 text-white overflow-hidden"
+				style={{
+					backgroundImage: `linear-gradient(rgba(30, 58, 138, 0.8), rgba(30, 58, 138, 0.8)), url(${pexels6Image})`,
+					backgroundSize: 'cover',
+					backgroundPosition: 'center',
+					backgroundRepeat: 'no-repeat',
+				}}>
 				<div className="absolute inset-0 bg-black opacity-20"></div>
 				<div className="relative container-max section-padding text-center">
 					<h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
@@ -71,7 +82,6 @@ export const HomePage = () => {
 					<div className="flex flex-col sm:flex-row gap-4 justify-center">
 						<Link to="/donate" className="btn-primary text-lg">
 							Donate Now
-							<ArrowRight className="ml-2 h-5 w-5" />
 						</Link>
 						<Link to="/programs" className="btn-outline border-white text-white hover:bg-white hover:text-hope-blue">
 							Our Programs
@@ -85,8 +95,13 @@ export const HomePage = () => {
 				<div className="container-max px-4 sm:px-6 lg:px-8">
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
 						{impactStats.map((stat, index) => (
-							<div key={index} className="text-center">
-								<div className="text-3xl md:text-4xl font-bold text-hope-blue mb-2">{stat.number}</div>
+							<div key={index} className="text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="text-3xl md:text-4xl font-bold text-hope-blue mb-2">
+									<AnimatedCounter
+										end={parseInt(stat.number.replace(/[^0-9]/g, ''))}
+										suffix={stat.number.replace(/[0-9]/g, '')}
+									/>
+								</div>
 								<div className="text-gray-600 font-medium">{stat.label}</div>
 							</div>
 						))}
@@ -155,7 +170,9 @@ export const HomePage = () => {
 								key={index}
 								className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
 								<div className="bg-hope-blue bg-opacity-10 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-									<program.icon className="h-6 w-6 text-hope-blue" />
+									<Tooltip content={`Learn more about our ${program.title.toLowerCase()} program`} position="top">
+										<program.icon className="h-6 w-6 text-hope-blue cursor-help" />
+									</Tooltip>
 								</div>
 								<h3 className="text-xl font-semibold text-gray-900 mb-3">{program.title}</h3>
 								<p className="text-gray-600 mb-4">{program.description}</p>
@@ -170,8 +187,22 @@ export const HomePage = () => {
 					<div className="text-center mt-12">
 						<Link to="/programs" className="btn-primary">
 							Explore All Programs
-							<ArrowRight className="ml-2 h-5 w-5" />
 						</Link>
+					</div>
+				</div>
+			</section>
+
+			{/* Donation Calculator */}
+			<section className="bg-gray-50 section-padding">
+				<div className="container-max">
+					<div className="text-center mb-12">
+						<h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">See Your Impact</h2>
+						<p className="text-xl text-gray-600 max-w-3xl mx-auto">
+							Discover exactly what your donation can accomplish. Every contribution creates lasting change.
+						</p>
+					</div>
+					<div className="max-w-2xl mx-auto">
+						<DonationCalculator />
 					</div>
 				</div>
 			</section>
@@ -187,7 +218,26 @@ export const HomePage = () => {
 					<div className="grid md:grid-cols-3 gap-8">
 						{testimonials.map((testimonial, index) => (
 							<div key={index} className="bg-white p-6 rounded-xl shadow-sm">
-								<div className="text-4xl mb-4">{testimonial.image}</div>
+								<div className="flex justify-center mb-4">
+									<img
+										src={testimonial.image}
+										alt={testimonial.author}
+										className="w-20 h-20 rounded-full object-cover border-4 border-gray-200"
+										onError={(e) => {
+											const img = e.currentTarget;
+											const fallback = img.nextSibling as HTMLElement;
+											img.style.display = 'none';
+											if (fallback) {
+												fallback.style.display = 'flex';
+											}
+										}}
+									/>
+									<div
+										className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-4xl"
+										style={{ display: 'none' }}>
+										👤
+									</div>
+								</div>
 								<blockquote className="text-gray-600 mb-4 italic">"{testimonial.quote}"</blockquote>
 								<div>
 									<div className="font-semibold text-gray-900">{testimonial.author}</div>
@@ -200,7 +250,6 @@ export const HomePage = () => {
 					<div className="text-center mt-12">
 						<Link to="/testimonials" className="btn-outline">
 							Read More Stories
-							<ArrowRight className="ml-2 h-5 w-5" />
 						</Link>
 					</div>
 				</div>

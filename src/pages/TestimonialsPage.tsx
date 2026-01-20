@@ -2,13 +2,14 @@ import { Heart, Quote, Star, Users, BookOpen, Briefcase, Award } from 'lucide-re
 import { Link } from 'react-router-dom';
 
 export const TestimonialsPage = () => {
+	// Updated testimonials data with image paths
 	const testimonials = [
 		{
 			id: 1,
 			name: 'Sarah Mukamana',
 			role: 'Program Graduate & Teacher',
 			location: 'Rwanda',
-			image: '👩‍🏫',
+			image: '/src/assets/pexels6.jpg', // Using existing image as placeholder
 			quote:
 				"Before Hope Is Everything came to my village, I had never been to school. Now I'm a qualified teacher helping other children get the education I missed. This program didn't just change my life - it changed my entire community.",
 			program: 'Adult Literacy Program',
@@ -21,7 +22,7 @@ export const TestimonialsPage = () => {
 			name: 'James Kone',
 			role: 'Skills Training Graduate',
 			location: 'Mali',
-			image: '👨‍🔧',
+			image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
 			quote:
 				'The vocational training gave me skills in carpentry and business management. I now employ 8 people from my village and can provide for my family. Hope Is Everything taught me that education is the key to freedom.',
 			program: 'Vocational Skills Training',
@@ -34,7 +35,7 @@ export const TestimonialsPage = () => {
 			name: 'Dr. Maria Santos',
 			role: 'Community Health Worker',
 			location: 'Peru',
-			image: '👩‍⚕️',
+			image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
 			quote:
 				"Through Hope Is Everything's healthcare access program, I became a trained health worker. I've helped deliver over 200 babies safely and educate families about health. My community trusts me because I have knowledge.",
 			program: 'Healthcare Access',
@@ -47,7 +48,7 @@ export const TestimonialsPage = () => {
 			name: 'Ahmed Al-Rashid',
 			role: 'Youth Leader',
 			location: 'Jordan',
-			image: '👨‍💼',
+			image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
 			quote:
 				'The youth empowerment program taught me leadership skills and gave me confidence. Now I organize community projects and mentor younger students. Education broke the cycle of poverty in my family.',
 			program: 'Youth Leadership',
@@ -60,7 +61,7 @@ export const TestimonialsPage = () => {
 			name: 'Grace Nakamuli',
 			role: "Women's Cooperative Leader",
 			location: 'Uganda',
-			image: '👩‍🌾',
+			image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
 			quote:
 				"The women's empowerment program helped me start a farming cooperative. We now support 40 women and their families. We learned business skills, leadership, and that women deserve equal opportunities.",
 			program: "Women's Empowerment",
@@ -73,7 +74,7 @@ export const TestimonialsPage = () => {
 			name: 'Carlos Mendoza',
 			role: 'Community Organizer',
 			location: 'Guatemala',
-			image: '👨‍🏫',
+			image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
 			quote:
 				"The community development program built our local school and health center. Now children don't have to walk 3 hours to get an education. Our village has hope for the first time in generations.",
 			program: 'Community Development',
@@ -90,7 +91,7 @@ export const TestimonialsPage = () => {
 			position: 'Regional Director, West Africa',
 			quote:
 				"Hope Is Everything's work in education and community development aligns perfectly with our mission. Their sustainable, community-centered approach creates lasting change.",
-			logo: '🏢',
+			logo: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=100&h=100&fit=crop',
 		},
 		{
 			organization: 'World Bank',
@@ -98,7 +99,7 @@ export const TestimonialsPage = () => {
 			position: 'Senior Education Specialist',
 			quote:
 				"The impact metrics from Hope Is Everything's programs are remarkable. They've demonstrated that targeted education interventions can break generational poverty cycles.",
-			logo: '🏛️',
+			logo: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=100&h=100&fit=crop',
 		},
 		{
 			organization: 'Local Government Partnership',
@@ -106,7 +107,7 @@ export const TestimonialsPage = () => {
 			position: 'Mayor, Riverside Community',
 			quote:
 				"Hope Is Everything worked alongside our community to understand our needs and build sustainable solutions. They're true partners in development.",
-			logo: '🏛️',
+			logo: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=100&h=100&fit=crop',
 		},
 	];
 
@@ -117,7 +118,7 @@ export const TestimonialsPage = () => {
 			duration: '2 years',
 			quote:
 				"Teaching through Hope Is Everything has been life-changing. Seeing students' faces light up when they understand a concept reminds me why education matters.",
-			image: '👨‍🏫',
+			image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'Lisa Chen',
@@ -125,7 +126,7 @@ export const TestimonialsPage = () => {
 			duration: '1 year',
 			quote:
 				"As a nurse, I've volunteered in many programs, but Hope Is Everything's approach to healthcare and education is unique. They treat people with dignity.",
-			image: '👩‍⚕️',
+			image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face',
 		},
 		{
 			name: 'David Park',
@@ -133,7 +134,7 @@ export const TestimonialsPage = () => {
 			duration: '6 months',
 			quote:
 				'Helping set up digital learning centers has shown me how technology can bridge educational gaps. The impact goes beyond just providing devices.',
-			image: '👨‍💻',
+			image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
 		},
 	];
 
@@ -172,7 +173,15 @@ export const TestimonialsPage = () => {
 										<div className="w-full">
 											<div className="flex items-center mb-6">
 												<Quote className="h-8 w-8 text-hope-blue mr-4" />
-												<div className="text-4xl">{testimonial.image}</div>
+												<img
+													src={testimonial.image}
+													alt={testimonial.name}
+													className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+													onError={(e) => {
+														e.currentTarget.src =
+															'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face';
+													}}
+												/>
 											</div>
 
 											<blockquote className="text-xl text-gray-700 mb-6 leading-relaxed italic">
@@ -205,7 +214,15 @@ export const TestimonialsPage = () => {
 											index % 2 === 0 ? 'lg:col-start-2' : 'lg:col-start-1'
 										}`}>
 										<div className="text-center">
-											<div className="text-8xl mb-6">{testimonial.image}</div>
+											<img
+												src={testimonial.image}
+												alt={testimonial.name}
+												className="w-32 h-32 rounded-full object-cover border-8 border-white shadow-2xl mb-6 mx-auto"
+												onError={(e) => {
+													e.currentTarget.src =
+														'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face';
+												}}
+											/>
 											<div className="text-2xl font-bold mb-2">Success Story</div>
 											<div className="text-green-100 mb-4">{testimonial.program}</div>
 											<div className="flex items-center justify-center">
@@ -238,7 +255,15 @@ export const TestimonialsPage = () => {
 						{regularTestimonials.map((testimonial) => (
 							<div key={testimonial.id} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow">
 								<div className="flex items-center mb-4">
-									<div className="text-3xl mr-3">{testimonial.image}</div>
+									<img
+										src={testimonial.image}
+										alt={testimonial.name}
+										className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-gray-200"
+										onError={(e) => {
+											e.currentTarget.src =
+												'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face';
+										}}
+									/>
 									<div>
 										<h3 className="font-bold text-gray-900">{testimonial.name}</h3>
 										<p className="text-hope-blue text-sm">{testimonial.role}</p>
@@ -271,7 +296,15 @@ export const TestimonialsPage = () => {
 					<div className="grid lg:grid-cols-3 gap-8">
 						{partnerTestimonials.map((partner, index) => (
 							<div key={index} className="bg-gray-50 rounded-xl p-8 text-center">
-								<div className="text-4xl mb-4">{partner.logo}</div>
+								<img
+									src={partner.logo}
+									alt={partner.organization}
+									className="w-16 h-16 rounded-lg object-cover mx-auto mb-4 border-2 border-gray-200"
+									onError={(e) => {
+										e.currentTarget.src =
+											'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=100&h=100&fit=crop';
+									}}
+								/>
 								<h3 className="text-xl font-bold text-gray-900 mb-2">{partner.organization}</h3>
 								<div className="text-hope-blue font-medium mb-4">{partner.person}</div>
 								<div className="text-gray-600 text-sm mb-4">{partner.position}</div>
@@ -296,7 +329,15 @@ export const TestimonialsPage = () => {
 						{volunteerStories.map((volunteer, index) => (
 							<div key={index} className="bg-white rounded-xl p-6 shadow-sm">
 								<div className="flex items-center mb-4">
-									<div className="text-3xl mr-3">{volunteer.image}</div>
+									<img
+										src={volunteer.image}
+										alt={volunteer.name}
+										className="w-16 h-16 rounded-full object-cover mr-4 border-2 border-gray-200"
+										onError={(e) => {
+											e.currentTarget.src =
+												'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face';
+										}}
+									/>
 									<div>
 										<h3 className="font-bold text-gray-900">{volunteer.name}</h3>
 										<p className="text-hope-blue text-sm">{volunteer.role}</p>

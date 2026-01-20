@@ -93,12 +93,12 @@ export const Footer = () => {
 								<div className="text-gray-300 text-sm">
 									<p>123 Hope Street</p>
 									<p>Community Center</p>
-									<p>New York, NY 10001</p>
+									<p>Lagos Nigeria</p>
 								</div>
 							</div>
 							<div className="flex items-center space-x-3">
 								<Phone className="h-5 w-5 text-hope-blue" />
-								<span className="text-gray-300 text-sm">+1 (555) 123-4567</span>
+								<span className="text-gray-300 text-sm">+234 810 234 5678</span>
 							</div>
 							<div className="flex items-center space-x-3">
 								<Mail className="h-5 w-5 text-hope-blue" />
