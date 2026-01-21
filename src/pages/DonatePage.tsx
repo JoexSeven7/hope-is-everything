@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { CreditCard, Smartphone, Heart, Users, BookOpen, Home, CheckCircle, Copy, Check, Globe } from 'lucide-react';
+import { CreditCard, Smartphone, CheckCircle, Copy, Check, Globe, BookOpen } from 'lucide-react';
 import { StripePaymentForm } from '../components/StripePaymentForm';
 import donateImage from '../assets/pexels6.jpg';
+import { getPresetAmounts, getImpactLevels } from '../lib/stripe';
 
 interface DonorInfo {
 	name: string;
@@ -36,7 +37,7 @@ export const DonatePage = () => {
 		{ code: 'INR', symbol: '₹', name: 'Indian Rupee' },
 	];
 
-	const presetAmounts = ['25', '50', '100', '250', '500'];
+	const presetAmounts = getPresetAmounts(selectedCurrency);
 
 	const cryptoWallets = [
 		{
@@ -93,38 +94,7 @@ export const DonatePage = () => {
 		alert('Payment failed: ' + error);
 	};
 
-	const impactLevels = [
-		{
-			amount: '25',
-			impact: 'Provides school supplies for 1 child for a month',
-			icon: BookOpen,
-			color: 'bg-green-500',
-		},
-		{
-			amount: '50',
-			impact: 'Funds one week of after-school tutoring',
-			icon: Users,
-			color: 'bg-blue-500',
-		},
-		{
-			amount: '100',
-			impact: 'Supports a student with full educational materials',
-			icon: BookOpen,
-			color: 'bg-purple-500',
-		},
-		{
-			amount: '250',
-			impact: 'Provides vocational training for one person',
-			icon: Home,
-			color: 'bg-orange-500',
-		},
-		{
-			amount: '500',
-			impact: 'Sponsors a community learning center for a month',
-			icon: Heart,
-			color: 'bg-red-500',
-		},
-	];
+
 
 	const paymentMethods = [
 		{
@@ -149,6 +119,14 @@ export const DonatePage = () => {
 	const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setCustomAmount(e.target.value);
 		setSelectedAmount('');
+	};
+
+	const handleCurrencyChange = (newCurrency: string) => {
+		setSelectedCurrency(newCurrency);
+		// Reset selected amount to default for new currency
+		const newPresetAmounts = getPresetAmounts(newCurrency);
+		setSelectedAmount(newPresetAmounts[1]); // Default to second preset (e.g., 50 USD, 46 EUR)
+		setCustomAmount('');
 	};
 
 	const handlePaymentMethodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -223,7 +201,7 @@ export const DonatePage = () => {
 								</label>
 								<select
 									value={selectedCurrency}
-									onChange={(e) => setSelectedCurrency(e.target.value)}
+									onChange={(e) => handleCurrencyChange(e.target.value)}
 									className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hope-green focus:border-transparent">
 									{currencies.map((currency) => (
 										<option key={currency.code} value={currency.code}>
@@ -474,10 +452,10 @@ export const DonatePage = () => {
 						<div className="bg-white rounded-xl shadow-lg p-6">
 							<h3 className="text-xl font-bold text-gray-900 mb-4">Donation Impact</h3>
 							<div className="space-y-4">
-								{impactLevels.map((level, index) => (
+								{getImpactLevels(selectedCurrency).map((level, index) => (
 									<div key={index} className="flex items-start space-x-3">
-										<div className={`${level.color} w-8 h-8 rounded-full flex items-center justify-center`}>
-											<level.icon className="h-4 w-4 text-white" />
+										<div className={`${level.iconColor} w-8 h-8 rounded-full flex items-center justify-center`}>
+											<BookOpen className="h-4 w-4 text-white" />
 										</div>
 										<div>
 											<div className="font-semibold text-gray-900">

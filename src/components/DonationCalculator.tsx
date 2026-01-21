@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Calculator, BookOpen, Users, Heart, Home, DollarSign } from 'lucide-react';
+import { getImpactCosts, getCurrencySymbol, formatCurrency } from '../lib/stripe';
 
 interface ImpactItem {
 	icon: React.ComponentType<{ className?: string }>;
@@ -9,44 +10,53 @@ interface ImpactItem {
 	color: string;
 }
 
-export const DonationCalculator: React.FC = () => {
+interface DonationCalculatorProps {
+	currency?: string;
+}
+
+export const DonationCalculator: React.FC<DonationCalculatorProps> = ({ currency = 'USD' }) => {
 	const [donationAmount, setDonationAmount] = useState(50);
 	const [frequency, setFrequency] = useState<'one-time' | 'monthly' | 'yearly'>('one-time');
 
-	const impactItems: ImpactItem[] = [
-		{
-			icon: BookOpen,
-			title: 'Educational Materials',
-			description: 'School supplies for students',
-			cost: 15,
-			color: 'bg-blue-500',
-		},
-		{
-			icon: Users,
-			title: 'Tutoring Session',
-			description: 'One week of after-school support',
-			cost: 25,
-			color: 'bg-green-500',
-		},
-		{
-			icon: Home,
-			title: 'Vocational Training',
-			description: 'Skills development program',
-			cost: 75,
-			color: 'bg-purple-500',
-		},
-		{
-			icon: Heart,
-			title: 'Healthcare Support',
-			description: 'Medical care for families',
-			cost: 100,
-			color: 'bg-red-500',
-		},
-	];
+	// Get impact costs for the selected currency
+	const getImpactItems = (): ImpactItem[] => {
+		const costs = getImpactCosts(currency);
+		return [
+			{
+				icon: BookOpen,
+				title: 'Educational Materials',
+				description: 'School supplies for students',
+				cost: costs.educationalMaterials,
+				color: 'bg-blue-500',
+			},
+			{
+				icon: Users,
+				title: 'Tutoring Session',
+				description: 'One week of after-school support',
+				cost: costs.tutoringSession,
+				color: 'bg-green-500',
+			},
+			{
+				icon: Home,
+				title: 'Vocational Training',
+				description: 'Skills development program',
+				cost: costs.vocationalTraining,
+				color: 'bg-purple-500',
+			},
+			{
+				icon: Heart,
+				title: 'Healthcare Support',
+				description: 'Medical care for families',
+				cost: costs.healthcareSupport,
+				color: 'bg-red-500',
+			},
+		];
+	};
 
 	const calculateImpact = (amount: number) => {
 		const impacts = [];
 		let remaining = amount;
+		const impactItems = getImpactItems();
 
 		for (const item of impactItems) {
 			const count = Math.floor(remaining / item.cost);
@@ -91,7 +101,9 @@ export const DonationCalculator: React.FC = () => {
 			<div className="mb-6">
 				<label className="block text-sm font-medium text-gray-700 mb-2">Donation Amount {formatFrequency()}</label>
 				<div className="relative">
-					<span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+					<span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+						{getCurrencySymbol(currency)}
+					</span>
 					<input
 						type="number"
 						value={donationAmount}
@@ -145,7 +157,7 @@ export const DonationCalculator: React.FC = () => {
 								</div>
 								<div className="text-right">
 									<div className="font-bold text-hope-blue">x{impact.count}</div>
-									<div className="text-sm text-gray-600">${impact.total}</div>
+									<div className="text-sm text-gray-600">{formatCurrency(impact.total, currency)}</div>
 								</div>
 							</div>
 						))}
@@ -163,7 +175,7 @@ export const DonationCalculator: React.FC = () => {
 						<div className="flex justify-between items-center">
 							<span className="font-semibold text-gray-900">Total Impact Value:</span>
 							<span className="text-2xl font-bold text-hope-green">
-								${getTotalImpact.reduce((sum: number, item: any) => sum + item.total, 0)}
+								{formatCurrency(getTotalImpact.reduce((sum: number, item: any) => sum + item.total, 0), currency)}
 							</span>
 						</div>
 					</div>

@@ -18,7 +18,7 @@ export const Header = () => {
 	const isActive = (path: string) => location.pathname === path;
 
 	return (
-		<header className="bg-white shadow-lg sticky top-0 z-50">
+		<header className="bg-white shadow-lg sticky top-0 z-50 pt-safe">
 			{/* Top Contact Bar */}
 			<div className="bg-hope-blue text-gray-400 py-2">
 				<div className="container-max px-4 sm:px-6 lg:px-8">
