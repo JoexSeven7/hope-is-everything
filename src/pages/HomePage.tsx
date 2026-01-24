@@ -1,11 +1,26 @@
 import { Link } from 'react-router-dom';
-import { Users, BookOpen, Heart, Target, Eye, Award, CheckCircle, TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { Users, BookOpen, Heart, Target, Eye, Award, CheckCircle, TrendingUp, Globe } from 'lucide-react';
 import pexels6Image from '../assets/pexels6.jpg';
 import { AnimatedCounter } from '../components/AnimatedCounter';
 import { DonationCalculator } from '../components/DonationCalculator';
 import { Tooltip } from '../components/Tooltip';
 
 export const HomePage = () => {
+	const [selectedCurrency, setSelectedCurrency] = useState('USD');
+
+	const currencies = [
+		{ code: 'USD', symbol: '$', name: 'US Dollar' },
+		{ code: 'EUR', symbol: '€', name: 'Euro' },
+		{ code: 'GBP', symbol: '£', name: 'British Pound' },
+		{ code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
+		{ code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+		{ code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+		{ code: 'CHF', symbol: 'CHF', name: 'Swiss Franc' },
+		{ code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
+		{ code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+	];
+
 	const impactStats = [
 		{ number: '50,000+', label: 'Lives Impacted' },
 		{ number: '150+', label: 'Communities Served' },
@@ -202,7 +217,25 @@ export const HomePage = () => {
 						</p>
 					</div>
 					<div className="max-w-2xl mx-auto">
-						<DonationCalculator />
+						{/* Currency Selection */}
+						<div className="mb-6 text-center">
+							<label className="block text-sm font-medium text-gray-700 mb-2">
+								<Globe className="inline h-4 w-4 mr-1" />
+								Select Currency
+							</label>
+							<select
+								value={selectedCurrency}
+								onChange={(e) => setSelectedCurrency(e.target.value)}
+								className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hope-blue focus:border-transparent">
+								{currencies.map((currency) => (
+									<option key={currency.code} value={currency.code}>
+										{currency.symbol} {currency.code} - {currency.name}
+									</option>
+								))}
+							</select>
+						</div>
+						
+						<DonationCalculator currency={selectedCurrency} />
 					</div>
 				</div>
 			</section>

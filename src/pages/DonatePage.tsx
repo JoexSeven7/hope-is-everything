@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { CreditCard, Smartphone, CheckCircle, Copy, Check, Globe, BookOpen } from 'lucide-react';
 import { StripePaymentForm } from '../components/StripePaymentForm';
+import { DonationCalculator } from '../components/DonationCalculator';
 import donateImage from '../assets/pexels6.jpg';
 import { getPresetAmounts, getImpactLevels } from '../lib/stripe';
 
@@ -112,6 +113,7 @@ export const DonatePage = () => {
 	];
 
 	const handleAmountSelect = (amount: string) => {
+		console.log('handleAmountSelect called with:', amount);
 		setSelectedAmount(amount);
 		setCustomAmount('');
 	};
@@ -448,23 +450,46 @@ export const DonatePage = () => {
 							</div>
 						</div>
 
+						{/* Donation Calculator */}
+						<div className="bg-white rounded-xl shadow-lg p-6">
+							<DonationCalculator 
+								currency={selectedCurrency} 
+								onDonationAmountChange={(amount) => {
+									handleAmountSelect(amount.toString());
+								}}
+							/>
+						</div>
+
 						{/* Impact Levels */}
 						<div className="bg-white rounded-xl shadow-lg p-6">
 							<h3 className="text-xl font-bold text-gray-900 mb-4">Donation Impact</h3>
 							<div className="space-y-4">
 								{getImpactLevels(selectedCurrency).map((level, index) => (
-									<div key={index} className="flex items-start space-x-3">
+									<a
+										key={index}
+										href="#"
+										onClick={(e) => {
+											e.preventDefault();
+											console.log('Impact level anchor clicked:', level.amount);
+											handleAmountSelect(level.amount);
+										}}
+										className={`flex items-start space-x-3 p-3 rounded-lg cursor-pointer transition-all ${
+											selectedAmount === level.amount
+												? 'bg-hope-green bg-opacity-10 border-2 border-hope-green'
+												: 'hover:bg-gray-50 border-2 border-transparent hover:border-hope-green'
+										}`}
+									>
 										<div className={`${level.iconColor} w-8 h-8 rounded-full flex items-center justify-center`}>
 											<BookOpen className="h-4 w-4 text-white" />
 										</div>
-										<div>
+										<div className="flex-1">
 											<div className="font-semibold text-gray-900">
 												{currentCurrency?.symbol}
 												{level.amount} {selectedCurrency}
 											</div>
 											<div className="text-sm text-gray-600">{level.impact}</div>
 										</div>
-									</div>
+									</a>
 								))}
 							</div>
 						</div>
